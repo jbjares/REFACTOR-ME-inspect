@@ -1,0 +1,9 @@
+server:
+  port: 9393
+
+inspect:
+  registry:
+    uri: http://193.196.20.100:5000
+    namespace: namespace
+    username: admin
+    password: adminpass

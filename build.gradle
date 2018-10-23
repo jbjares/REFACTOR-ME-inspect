@@ -36,14 +36,39 @@ compileTestKotlin {
 }
 
 repositories {
-	mavenCentral()
+    jcenter()
+    mavenCentral()
+
+    // That is where the JDregistry is currently hosted
+    maven {
+        url  "https://dl.bintray.com/lukaszimmermann/jdregistry"
+    }
+
+    // The Artifactory for the PHT project
+    maven {
+        url "https://artifactory.difuture.de/pht"
+    }
 }
 
-
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-web')
+
+    // This is required to make the Spotify Docker client work. see:
+    // https://github.com/spotify/docker-client/issues/1030
+    implementation group: 'org.glassfish.jersey.bundles.repackaged', name: 'jersey-guava', version: '2.25.1'
+    implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.27'
+
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+
 	implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    implementation group: 'de.difuture.ekut.pht.lib', name: 'api', version: '0.2.4'
+    implementation group: 'de.difuture.ekut.pht.lib', name: 'runtime-docker-spotify', version: '0.1.3'
+
+    // The HttpClient that we use for the Docker Registry
+    implementation group: 'jdregistry.client', name: 'http-spring', version: '0.0.6'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
