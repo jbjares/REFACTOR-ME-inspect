@@ -28,7 +28,10 @@ class TrainInspector
             dockerRegistryClient = DockerRegistryGetClient.of(
                     props.uri,
                     SpringHttpGetClient(),
-                    Authenticate.with(props.username,  props.password)))
+                    Authenticate.with(props.username,  props.password)),
+            namespace = props.namespace)
+
+
     private val docker = dockerClientProvider.getDockerClient()
 
     private val info = StationInfo(0, TrainTag.IMMEDIATE)
