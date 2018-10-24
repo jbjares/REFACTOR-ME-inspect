@@ -10,4 +10,5 @@ FROM openjdk:8-jre-alpine3.8
 COPY --from=build /opt/srv/build/libs/inspect-0.0.1.jar /opt/srv/inspect.jar
 
 ENTRYPOINT [ "java", "-jar", "/opt/srv/inspect.jar"]
+EXPOSE 9393
 
