@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 class CommandController
 @Autowired constructor(private val inspector: TrainInspector) {
 
-    @PostMapping
-    fun execute(@RequestBody command: CommandRequest): ResponseEntity<TrainResponse> {
-
-        val response = inspector.executeCommand(command)
-        return response?.let { ResponseEntity.ok(it)} ?: ResponseEntity.notFound().build()
+    private companion object {
+        val NOT_FOUND : ResponseEntity<TrainResponse> = ResponseEntity.notFound().build()
     }
-}
+
+    @PostMapping
+    fun execute(@RequestBody command: CommandRequest): ResponseEntity<TrainResponse> =
+
+            inspector.executeCommand(command)?.let { ResponseEntity.ok(it) } ?: NOT_FOUND
+    }
